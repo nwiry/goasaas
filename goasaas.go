@@ -8,22 +8,22 @@ import (
 )
 
 const (
-	ENVIRONMENT_PRODUCTION = "https://www.asaas.com/" // Production environment URL for Asaas API.
+	ENVIRONMENT_PRODUCTION = "https://www.asaas.com/"     // Production environment URL for Asaas API.
 	ENVIRONMENT_SANDBOX    = "https://sandbox.asaas.com/" // Sandbox environment URL for Asaas API.
-	API_VERSION            = "v3" // Version of the Asaas API being used.
+	API_VERSION            = "v3"                         // Version of the Asaas API being used.
 )
 
 // Asaas is the main client struct for interacting with the Asaas API.
 type Asaas struct {
-	access_token string   // The access token used for authentication with the Asaas API.
-	environment  string   // The environment URL for making API requests (production or sandbox).
+	access_token string // The access token used for authentication with the Asaas API.
+	environment  string // The environment URL for making API requests (production or sandbox).
 }
 
 // request returns a new instance of the Request type with the API endpoint set based on the Asaas environment.
 func (a *Asaas) request() *request.Request {
 	r := &request.Request{}
 	e := fmt.Sprintf("%s/api/%s", a.environment, API_VERSION)
-	r.SetEndpoint(e)
+	r.Set(e, a.access_token)
 	return r
 }
 

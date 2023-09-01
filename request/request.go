@@ -1,8 +1,8 @@
 package request
 
 import (
-	"fmt"
 	"net/http"
+	"net/url"
 )
 
 var accessToken string
@@ -22,19 +22,26 @@ func (r *Request) Set(e, access_token string) {
 }
 
 // Post sends an HTTP POST request to the specified route.
-func (r *Request) Post(requestURL string) {
+func (r *Request) Post(endpoint string, body interface{}) {
+	req, err := http.NewRequest(http.MethodPost, r.endpoint+endpoint, nil)
 }
 
 // Get sends an HTTP GET request to the specified route.
-func (r *Request) Get(rourequestURLte string) {
+func (r *Request) Get(endpoint string, body interface{}) {
+	req, err := http.NewRequest(http.MethodGet, r.endpoint+endpoint, nil)
+
 }
 
 // Put sends an HTTP PUT request to the specified route.
-func (r *Request) Put(requestURL string) {
+func (r *Request) Put(endpoint string, body interface{}) {
+	req, err := http.NewRequest(http.MethodPut, r.endpoint+endpoint, nil)
+
 }
 
 // Delete sends an HTTP DELETE request to the specified route.
-func (r *Request) Delete(requestURL string) {
+func (r *Request) Delete(endpoint string, body interface{}) {
+	req, err := http.NewRequest(http.MethodDelete, r.endpoint+endpoint, nil)
+
 }
 
 // Custom Transport with default headers
@@ -44,8 +51,9 @@ type myTransport struct {
 
 func (t *myTransport) RoundTrip(req *http.Request) (*http.Response, error) {
 	// Set the default headers here
-	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", accessToken))
+	req.Header.Set("content-type", "application/json")
+	req.Header.Set("accept", "application/json")
+	req.Header.Set("access_token", accessToken)
 
 	// If you want to add more default headers, you can set them here
 
